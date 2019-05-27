@@ -1,0 +1,10 @@
+# Ignore node packages
+node_modules
+
+# Igoner editor code
+.vscode
+
+.DS_Store
+
+# Ignore environment variables
+.env
