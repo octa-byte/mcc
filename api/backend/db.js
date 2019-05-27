@@ -101,10 +101,10 @@ function list(limit, token, cb) {
 // data is automatically translated into Datastore format. The book will be
 // queued for background processing.
 // [START update]
-function update(id, data, cb) {
+function update(name, data, cb) {
   let key;
-  if (id) {
-    key = ds.key([kind, parseInt(id, 10)]);
+  if (name) {
+    key = ds.key([kind, name]);
   } else {
     key = ds.key(kind);
   }
@@ -115,18 +115,18 @@ function update(id, data, cb) {
   };
 
   ds.save(entity, err => {
-    data.id = entity.key.id;
+    data.name = entity.key.name;
     cb(err, err ? null : data);
   });
 }
 // [END update]
 
-function create(data, cb) {
-  update(null, data, cb);
+function create(name, data, cb) {
+  update(name, data, cb);
 }
 
-function read(id, cb) {
-  const key = ds.key([kind, parseInt(id, 10)]);
+function read(name, cb) {
+  const key = ds.key([kind, name]);
   ds.get(key, (err, entity) => {
     if (!err && !entity) {
       err = {
@@ -142,8 +142,8 @@ function read(id, cb) {
   });
 }
 
-function _delete(id, cb) {
-  const key = ds.key([kind, parseInt(id, 10)]);
+function _delete(name, cb) {
+  const key = ds.key([kind, parseInt(name, 10)]);
   ds.delete(key, cb);
 }
 
