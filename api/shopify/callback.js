@@ -10,6 +10,7 @@ const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 
 const shopInfo = require('./shopInfo');
+const db = require('../backend/db');
 
 router.get('/', (req, res, next) => {
     const { shop, hmac, code, state } = req.query;
@@ -46,6 +47,19 @@ router.get('/', (req, res, next) => {
       }
   
       // TODO: get shop info if this is first time
+      console.log("============ Getting shop info ===============");
+      db.read(shop + "-test5", (err, data) => {
+        if(err){
+          console.log('Shop info not found');
+          shopInfo(shop, code, res);
+          console.log('Redirecting to MCC panel...');
+          return;
+        }
+        console.log('Shop info already there');
+        console.log('Redirecting to MCC panel...');
+        //TODO: Redirect this to MCC panel
+        res.send('TODO: Redirect to MCC Panel');
+      });
   
     } else {
       res.status(400).send('Required parameters missing');

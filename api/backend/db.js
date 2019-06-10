@@ -105,8 +105,35 @@ function update(name, data, cb) {
   let key;
   if (name) {
     key = ds.key([kind, name]);
-  } else {
-    key = ds.key(kind);
+  } 
+
+  read(name, (err, readData) => {
+    if(err){
+      console.log(err);
+      cb(err, null);
+      return;
+    }
+
+    const newData = Object.assign(readData, data);
+    const entity = {
+      key: key,
+      data: toDatastore(newData, ['description']),
+    };
+  
+    ds.save(entity, err => {
+      data = entity.key;
+      cb(err, err ? null : data);
+    });
+  });
+
+  
+}
+// [END update]
+
+function create(name, data, cb) {
+  let key;
+  if (name) {
+    key = ds.key([kind, name]);
   }
 
   const entity = {
@@ -115,14 +142,9 @@ function update(name, data, cb) {
   };
 
   ds.save(entity, err => {
-    data.name = entity.key.name;
+    data = entity.key;
     cb(err, err ? null : data);
   });
-}
-// [END update]
-
-function create(name, data, cb) {
-  update(name, data, cb);
 }
 
 function read(name, cb) {
