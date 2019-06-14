@@ -87,8 +87,8 @@ function shopInfo(shop, code, res, update){
             const data = {
                 shop: shop,
                 accessToken: accessToken,
-                currency: s.currency,
-                money_format: s.money_format,
+                currency: s.shop.currency,
+                money_format: s.shop.money_format,
                 configure: false,
                 plan: "free",
                 enable: true,
@@ -99,6 +99,8 @@ function shopInfo(shop, code, res, update){
                 pickerLocation: "tr",
                 pickerType: "edge"
             };
+            console.log("Data that is going to be saved in database");
+            console.log(data);
             console.log('saving shop info into database');
             // SAVE: shop setting in database
             db.create(shop, data, (err, savedData) => {

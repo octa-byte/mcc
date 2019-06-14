@@ -4,7 +4,7 @@ const nonce = require('nonce')();
 const dotenv = require('dotenv').config();
 
 const apiKey = process.env.SHOPIFY_API_KEY;
-const scopes = 'read_products,write_script_tags';
+const scopes = 'write_script_tags';
 const forwardingAddress = "https://mcc-octabyte.appspot.com"; 
 
 router.get('/', (req, res, next) => {
