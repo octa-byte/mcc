@@ -4,10 +4,13 @@
 const {Datastore} = require('@google-cloud/datastore');
 
 // [START config]
-const ds = new Datastore({
+const ds = new Datastore();
+
+/* const ds = new Datastore({
   apiEndpoint: 'http://localhost:8081',
   projectId: 'test-octabyte'
-});
+}); */
+
 const kind = 'Mcc';
 // [END config]
 

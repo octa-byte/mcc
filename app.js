@@ -5,10 +5,15 @@ const bodyParser = require('body-parser');
 
 const shopifyAuth = require('./api/shopify/auth');
 const shopifyCallback = require('./api/shopify/callback');
+const shopifyBilling = require('./api/shopify/billing');
 const shopSetting = require('./api/backend/shopSetting');
 
 const testRoute = require('./api/test/testRoute');
 const testShop = require('./api/test/shop');
+
+app.use('/panel', express.static('./api/panel'));
+
+app.use('/script', express.static('./api/script'));
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,6 +35,7 @@ app.use('/tshop', testShop);
 
 app.use('/shopify', shopifyAuth);
 app.use('/shopify/callback', shopifyCallback);
+app.use('/billing', shopifyBilling);
 
 app.use('/setting', shopSetting);
 

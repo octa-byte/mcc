@@ -7,7 +7,7 @@ const db = require('../backend/db');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 
-function shopInfo(shop, code, res){
+function shopInfo(shop, code, res, update){
 
       // DONE: Exchange temporary code for a permanent access token
       const accessTokenRequestUrl = 'https://' + shop + '/admin/oauth/access_token';
@@ -22,16 +22,61 @@ function shopInfo(shop, code, res){
       .then((accessTokenResponse) => {
         const accessToken = accessTokenResponse.access_token;
 
+        if(update){
+          const updateData = {
+            accessToken: accessToken
+          };
+          db.update(shop, updateData, (err, savedData) => {
+            if(err){
+                //res.json({ message:"Error while updating access token" });
+                console.log("Error while updating access token");
+                return;
+            }
+            console.log("AccessToken updated");
+            //res.redirect('http://' + shop + '/admin/apps/multi-currency-1');
+          });
+
+          return;
+        }
+
         // SAVE: shop and access token in cookie for further use
         //res.cookie('shop', shop);
         //res.cookie('accessToken', accessToken);
+
+        const shopRequestUrlS = 'https://' + shop + '/admin/api/2019-04/script_tags.json';
+        const shopRequestHeadersS = {
+          'X-Shopify-Access-Token': accessToken,
+        };
+
+        const scriptTagBodyS = {
+          "script_tag": {
+            "event": "onload",
+            "src": "https:\/\/mcc-octabyte.appspot.com\/script\/obc-script.js"
+          }
+        };
+
+        const optionsS = {
+          url: shopRequestUrlS,
+          body: scriptTagBodyS,
+          headers: shopRequestHeadersS,
+          json: true
+        };
+
+        request.post(optionsS)
+        .then((shopResponse) => {
+          console.log('script added');
+        })
+        .catch((error) => {
+          console.log('ERROR: script is not added');
+          console.log(error);
+        });
 
         // DONE: Use access token to make API call to 'shop' endpoint
         const shopRequestUrl = 'https://' + shop + '/admin/api/2019-04/shop.json';
         const shopRequestHeaders = {
           'X-Shopify-Access-Token': accessToken,
         };
-        
+
         console.log('Access token received: ' + accessToken);
         console.log('Sending request for shop info');
         request.get(shopRequestUrl, { headers: shopRequestHeaders })
@@ -56,7 +101,7 @@ function shopInfo(shop, code, res){
             };
             console.log('saving shop info into database');
             // SAVE: shop setting in database
-            db.create(shop + "-test5", data, (err, savedData) => {
+            db.create(shop, data, (err, savedData) => {
                 if(err){
                     console.log('Error: while saving shop info in database');
                     //res.json({ message: err });
@@ -65,7 +110,7 @@ function shopInfo(shop, code, res){
 
                 console.log('Redirecting to MCC panel from SHOP INFO page');
                 // TODO: redirect to MCC Panel
-                res.redirect('http://' + shop + '/admin/apps/multi-currency-1');
+                res.redirect('https://' + shop + '/admin/apps/multi-currency-converter');
             });
 
           //res.status(200).end(shopResponse);

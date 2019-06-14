@@ -60,7 +60,7 @@ router.post('/enablescript', (req, res) => {
     const scriptTagBody = {
       "script_tag": {
         "event": "onload",
-        "src": "https:\/\/e92800f3.ngrok.io\/currency.js"
+        "src": "https:\/\/mcc-octabyte.appspot.com\/api\/script\/currency.js"
       }
     };
   

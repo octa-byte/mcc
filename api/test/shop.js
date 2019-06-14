@@ -34,7 +34,7 @@ router.get('/bill', (req, res, next) => {
         "recurring_application_charge": {
           "name": "Recurring charge",
           "price": 20.0,
-          "return_url": "https:\/\/d0c3ae61.ngrok.io\/tshop\/back",
+          "return_url": "http:\/\/localhost:3300\/tshop\/back?shop="+encodeURIComponent(shop),
           "test": true
           }
         };
@@ -52,8 +52,8 @@ router.get('/bill', (req, res, next) => {
         
         const redirectURL = shopResponse.recurring_application_charge.decorated_return_url;
 
-        res.redirect(redirectURL);
-        //res.send(shopResponse);
+        //res.redirect(redirectURL);
+        res.send(shopResponse);
     })
     .catch((error) => {
       res.status(200).send(error);
@@ -74,6 +74,8 @@ router.get('/back', (req, res, next) => {
     console.log("===== END =====");
 
     const { charge_id } = req.query;
+    const shop = decodeURIComponent(req.query.shop);
+    console.log(shop);
 
     const shopRequestUrl = 'https://' + shop + '/admin/api/2019-04/recurring_application_charges/'+charge_id+'/activate.json';
     const shopRequestHeaders = {
@@ -84,7 +86,7 @@ router.get('/back', (req, res, next) => {
         "recurring_application_charge": {
           "name": "Recurring charge",
           "price": 20.0,
-          "return_url": "https:\/\/d0c3ae61.ngrok.io\/tshop\/back",
+          "return_url": "http:\/\/localhost:3300\/tshop\/back",
           "test": true
           }
         };
