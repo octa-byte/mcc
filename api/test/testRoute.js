@@ -1,8 +1,24 @@
 const express = require('express');
 const router = express.Router();
+const cookie = require('cookie');
 
 const test = require('./test');
 const db = require('../backend/db');
+
+router.get('/getcookie', (req, res, next) => {
+    const shop = cookie.parse(req.headers.cookie).shop;
+    res.send(shop);
+});
+
+router.get('/setcookie', (req, res, next) => {
+    res.cookie('testcookie', "This is a test cookie");
+    res.send('TestCoookie set');
+});
+
+router.get('/gettestcookie', (req, res, next) => {
+    const testcookie = cookie.parse(req.headers.cookie).testcookie;
+    res.send(testcookie);
+})
 
 router.get('/', (req, res, next) => {
 

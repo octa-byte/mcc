@@ -16,8 +16,10 @@ router.get('/', (req, res, next) => {
     const { shop, hmac, code, state } = req.query;
     const stateCookie = cookie.parse(req.headers.cookie).state;
   
+    //res.cookie('shop', shop);
+
     if (state !== stateCookie) {
-      return res.status(403).send('Request origin cannot be verified');
+      return res.status(200).send('Request origin cannot be verified');
     }
   
     if (shop && hmac && code) {
@@ -43,7 +45,7 @@ router.get('/', (req, res, next) => {
       };
   
       if (!hashEquals) {
-        return res.status(400).send('HMAC validation failed');
+        return res.status(200).send('HMAC validation failed');
       }
   
       // TODO: get shop info if this is first time
@@ -60,11 +62,11 @@ router.get('/', (req, res, next) => {
         //TODO: Redirect this to MCC panel
         shopInfo(shop, code, res, true);
         //res.send('TODO: Redirect to MCC Panel from callback');
-        res.redirect('/panel');
+        res.redirect('/panel?'+shop);
       });
   
     } else {
-      res.status(400).send('Required parameters missing');
+      res.status(200).send('Required parameters missing');
     }
 });
 

@@ -8,3 +8,6 @@ node_modules
 
 # Ignore environment variables
 .env
+
+#Ignore the build folder for react App
+build

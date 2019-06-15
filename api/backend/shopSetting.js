@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const db = require('./db');
 
 router.post('/save', (req, res) => {
@@ -21,10 +20,15 @@ router.post('/save', (req, res) => {
 
 router.post('/read', (req, res) => {
     const shop = req.body.shop;
+    //const shop = cookie.parse(req.headers.cookie).shop;
+    //const shop = 'octabyte-shop-test.myshopify.com';
     
     db.read(shop, (err, data) =>{
         if(err){
-            res.json({ message: "error" });
+            res.json({ 
+              error: err,
+              pdata: shop 
+            });
             return;
         }
 

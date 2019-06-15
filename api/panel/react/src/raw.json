@@ -1,0 +1,33 @@
+var curriences = [
+    'NTD', 'BYN', 'CNH', 'MRU', 'STN', 'VES'];
+
+
+{
+    "enable": true,
+    "allCurrencies": true,
+    "currencies": [
+        "PKR",
+        "USD",
+        "KSA"
+    ],
+    "geoLocation": true,
+    "defaultCurrencyPicker": true,
+    "pickerLocation": "tr",
+    "pickerType": "edge"
+}
+
+const data = {
+    shop: shop,
+    accessToken: accessToken,
+    currency: s.currency,
+    money_format: s.money_format,
+    configure: false,
+    plan: "free",
+    enable: true,
+    allCurrencies: true,
+    currencies: [],
+    geoLocation: false,
+    defaultCurrencyPicker: true,
+    pickerLocation: "tr",
+    pickerType: "edge"
+};
