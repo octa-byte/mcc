@@ -44,17 +44,16 @@ class CustomerExplanation extends Component {
                 <br/>
                 <span className="mcc-code-tag">&#x3C;span</span><span className="mcc-code-tag">&#x3E;</span>
                 &#9432;
-                <span className="mcc-code-tag">&#x3C;/span&#x3E;</span>
-                Currency Exchange Rates
+                <span className="mcc-code-tag">&#x3C;/span&#x3E;</span> Currency Exchange Rates
                 <br/>
                 <span className="mcc-code-tag">&#x3C;/div&#x3E;</span>
                 <br/>
                 <span className="mcc-code-tag">&#x3C;div</span> <span className="mcc-code-attr">class=</span><span className="mcc-code-attr-val">&#x22;obcib-c&#x22;</span><span className="mcc-code-tag">&#x3E;</span>
                 <br/>
-                <span className="mcc-code-tag">{'{{shop.name}}'}</span>  <span className="mcc-code-text">process all orders in</span>  <span className="mcc-code-tag">{'{{shop.currency}}'}</span>
+                <span className="mcc-code-tag">&#x3C;b&#x3E;{'{{shop.name}}'}&#x3C;/b&#x3E;</span>  <span className="mcc-code-text">process all orders in</span>  <span className="mcc-code-tag">&#x3C;b&#x3E;{'{{shop.currency}}'}&#x3C;/b&#x3E;</span>
                 <span className="mcc-code-text">. While the content of your cart is currently displayed 
                 in</span> <span className="mcc-code-tag">&#x3C;span</span> <span className="mcc-code-attr">id=</span><span className="mcc-code-attr-val">&#x22;octabyte-selected-currency&#x22;</span><span className="mcc-code-tag">&#x3E;&#x3C;/span&#x3E;</span><span className="mcc-code-text">, 
-                you will checkout using</span>  <span className="mcc-code-tag">{'{{shop.currency}}'}</span>  <span className="mcc-code-text">at the most 
+                you will checkout using</span>  <span className="mcc-code-tag">&#x3C;b&#x3E;{'{{shop.currency}}'}&#x3C;/b&#x3E;</span>  <span className="mcc-code-text">at the most 
                 current exchange rate.</span>
                 <br/>
                 <span className="mcc-code-tag">&#x3C;/div&#x3E;</span>
