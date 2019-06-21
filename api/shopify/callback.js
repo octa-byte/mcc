@@ -55,7 +55,7 @@ router.get('/', (req, res, next) => {
           return;
         }
         shopInfo(shop, code, res, true);
-        res.redirect('/static?'+shop);
+        res.redirect('/panel?'+shop);
       });
   
     } else {

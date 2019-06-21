@@ -73,7 +73,6 @@ class App extends Component {
   componentDidMount = () => {
     let shopName = window.location.search;
     shopName = shopName.replace('?','');
-    console.log(shopName);
     
     
     fetch(APP_URL + "/read", { 
@@ -89,7 +88,6 @@ class App extends Component {
     .then(res => res.json())
     .then(
       (result) => {
-        console.log(result);
         if(result.money_format.includes("money")){
           this.setState({ settings: result, isLoading: false, extConfig: true });
         }else{
