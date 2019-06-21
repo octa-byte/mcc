@@ -1,4 +1,4 @@
-var settings = null;
+var obcSettings = null;
 
 var settingsLoaded = false;
 var shopifyCurrenciesLoaded = false;
@@ -45,11 +45,11 @@ function addDropDown(){
     var dropDownCss = '';
     var edge = 0;
 
-    if (settings.pickerType != 'edge') {
+    if (obcSettings.pickerType != 'edge') {
         edge = 10;
     }
 
-    switch(settings.pickerLocation){
+    switch(obcSettings.pickerLocation){
         case 'tr':
             pickerLocationCss = "top:"+ (0+edge) +"px;right:"+ (0+edge) +"px";
             dropDownCss = 'right:0';
@@ -197,7 +197,7 @@ function convertCurrency(currency){
 
     localStorage.setItem('obcCurrencyCode', currency);
     localStorage.setItem('obc-fast-currency-code', currency);
-    localStorage.setItem('obc-fast-setting-currency', settings.currency);
+    localStorage.setItem('obc-fast-setting-currency', obcSettings.currency);
 
     var moneySpan = document.getElementsByClassName('money');
     for (money of moneySpan) {
@@ -207,7 +207,7 @@ function convertCurrency(currency){
         
         var isOnlyNum = /^[0-9, .]+$/.test(m);
         
-        var newMoney = Currency.convert(parseFloat(thenum), settings.currency, currency);
+        var newMoney = Currency.convert(parseFloat(thenum), obcSettings.currency, currency);
         
         newMoney = newMoney.toFixed(2);
         
@@ -249,7 +249,7 @@ function loadSetting(){
       .then(
         (result) => {
   
-          settings = result;
+            obcSettings = result;
           settingsLoaded = true;  
         },
         (error) => {
@@ -257,7 +257,7 @@ function loadSetting(){
         }
     );
 /* 
-    settings = {
+    obcSettings = {
         shop: 'shop',
         accessToken: 'accessToken',
         currency: 'PKR',
@@ -300,7 +300,7 @@ function showCustomerExplaination(){
 
 function configureSetting(){
 
-    if (settings.defaultCurrencyPicker) {
+    if (obcSettings.defaultCurrencyPicker) {
         addDropDown();
     } else {
         var config = addCustomDropDown();
@@ -308,16 +308,16 @@ function configureSetting(){
         if (!config) return;
     }
 
-    if (settings.geoLocation) {
+    if (obcSettings.geoLocation) {
         enableGeoLocation();
     } else {
         convertCurrencyByUserDefined();
     }
 
-    if (settings.allCurrencies) {
+    if (obcSettings.allCurrencies) {
         generateCurrencyList(null);
     } else {
-        generateCurrencyList(settings.currencies);
+        generateCurrencyList(obcSettings.currencies);
     }
     
     //showCustomerExplaination();
@@ -349,7 +349,7 @@ function fastCurrencyConverter(){
     var fastSettingCurr = localStorage.getItem('obc-fast-setting-currency');
 
     if(fastCurrCode != null) {
-        settings = {
+        obcSettings = {
             currency: fastSettingCurr
         }
         convertCurrency(fastCurrCode);
@@ -370,7 +370,7 @@ function fastCurrencyConverter(){
     var settingTimer = setInterval(function(){
         if (settingsLoaded && shopifyCurrenciesLoaded) {
             
-            if (settings.geoLocation) {
+            if (obcSettings.geoLocation) {
                 loadGeoPlugin();
                 clearInterval(settingTimer);
             } else {
