@@ -91,7 +91,7 @@ router.get('/activate', (req, res, next) => {
                         return;
                     }
             
-                    res.redirect('https://'+shop + '/admin/apps/multi-currency-1');
+                    res.redirect('https://'+shop + '/admin/apps/multi-currency-converter');
                 });
             }
         })
