@@ -97,7 +97,7 @@ function addCustomDropDown(){
     var icon = obcPlacholder.getAttribute('icon');
 
     if (icon == 'default') {
-        var iconURL = "script/curr-sign.svg";
+        var iconURL = "https://mcc-octabyte.appspot.com/script/currsign.svg";
     } else {
         var iconURL = icon;
     }
