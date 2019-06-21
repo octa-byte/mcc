@@ -58,9 +58,7 @@ class GeoLocation extends Component {
     upgradeAccount = () => {
       const shop = this.props.shop;
       const billingURL = 'https://mcc-octabyte.appspot.com/billing?shop=' + encodeURIComponent(shop);
-      console.log(billingURL);
-      window.open(billingURL, "_self");
-      window.open(billingURL);
+      window.open(billingURL, "_top");
     }
 
     toggleToast = () => {
