@@ -11,7 +11,7 @@ const shopSetting = require('./api/backend/shopSetting');
 const testRoute = require('./api/test/testRoute');
 const testShop = require('./api/test/shop');
 
-app.use('/panel', express.static('./api/panel'));
+app.use('/static', express.static('./api/panel/react/build'));
 
 app.use('/script', express.static('./api/script'));
 

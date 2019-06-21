@@ -17,7 +17,6 @@ function shopInfo(shop, code, res, update){
         code,
       };
   
-      console.log('Sending request to get shop accessToken');
       request.post(accessTokenRequestUrl, { json: accessTokenPayload })
       .then((accessTokenResponse) => {
         const accessToken = accessTokenResponse.access_token;
@@ -77,8 +76,6 @@ function shopInfo(shop, code, res, update){
           'X-Shopify-Access-Token': accessToken,
         };
 
-        console.log('Access token received: ' + accessToken);
-        console.log('Sending request for shop info');
         request.get(shopRequestUrl, { headers: shopRequestHeaders })
         .then((shopResponse) => {
             console.log('Shop info received');
@@ -99,9 +96,6 @@ function shopInfo(shop, code, res, update){
                 pickerLocation: "tr",
                 pickerType: "edge"
             };
-            console.log("Data that is going to be saved in database");
-            console.log(data);
-            console.log('saving shop info into database');
             // SAVE: shop setting in database
             db.create(shop, data, (err, savedData) => {
                 if(err){
@@ -110,9 +104,8 @@ function shopInfo(shop, code, res, update){
                     return;
                 }
 
-                console.log('Redirecting to MCC panel from SHOP INFO page');
                 // TODO: redirect to MCC Panel
-                res.redirect('https://' + shop + '/admin/apps/multi-currency-converter');
+                res.redirect('https://' + shop + '/admin/apps/multi-currency-1');
             });
 
           //res.status(200).end(shopResponse);

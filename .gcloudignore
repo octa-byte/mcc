@@ -16,4 +16,9 @@
 # Node.js dependencies:
 node_modules/
 
-react
+# Ignore react 
+react/node_modules
+react/public
+react/src
+react/package-lock.json
+react/package.json
