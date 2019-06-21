@@ -11,3 +11,8 @@ node_modules
 
 #Ignore the build folder for react App
 build
+
+#Ignore static files that are generated from react
+panel/static
+panel/index.html
+panel/asset-manifest.json

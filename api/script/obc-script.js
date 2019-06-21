@@ -142,4 +142,240 @@ function generateCurrencyList(curr){
         'GMD', 'CVE', 'BTN', 'XAF', 'UGX', 'MAD', 'MNT',
         'LSL', 'XAG', 'TOP', 'SHP', 'RSD', 'HTG', 'MGA', 'MZN',
         'FKP', 'BWP', 'HNL', 'PYG', 'JEP', 'EGP', 'LBP', 'ANG',
-        'W
+        'WST', 'TVD', 'GYD', 'GGP', 'NPR', 'KMF', 'IRR', 'XPD',
+        'SRD', 'TMM', 'SZL', 'MOP', 'BMD', 'XPF', 'ETB', 'JOD',
+        'MDL', 'MRO', 'YER', 'BAM', 'AWG', 'PEN', 'VEF', 'SLL',
+        'KYD', 'AOA', 'TND', 'TJS', 'SCR', 'LKR', 'DJF', 'GNF',
+        'VUV', 'SDG', 'IMP', 'GEL', 'FJD', 'DOP', 'XDR', 'MUR',
+        'MMK', 'LRD', 'BBD', 'ZMK', 'XAU', 'VND', 'UAH', 'TMT',
+        'IQD', 'BGN', 'KGS', 'RWF', 'BHD', 'UZS', 'PKR', 'MKD',
+        'AFN', 'NAD', 'BDT', 'AZN', 'SOS', 'QAR', 'PAB', 'CUC',
+        'SVC', 'SBD', 'ALL', 'BND', 'KWD', 'GHS', 'ZMW', 'XBT',
+        'NTD', 'BYN', 'CNH', 'MRU', 'STN', 'VES'];
+
+    } else {
+        var curriences = [];
+        for ( c of curr ) {
+            curriences.push(c.currency);
+        }
+    }   
+
+    var obcDropDown = document.getElementById("obc-drop-down");
+
+    var obcDropMarkup = '<input type="text" placeholder="Search.." id="obc-drop-search" onkeyup="obc_filter_curr()">';
+
+    for (c of curriences) {
+        obcDropMarkup += '<li><a href="#">' + c + '</a></li>';
+    }
+
+    obcDropDown.innerHTML = obcDropMarkup;
+}
+
+function enableGeoLocation(){
+    document.getElementById("obc-selected-curr").innerText = geoPluginCurrencyCode;
+    convertCurrency(geoPluginCurrencyCode);
+}
+
+function saveOriginalValue(){
+    var moneySpan = document.getElementsByClassName("money");
+    for (money of moneySpan) {
+        money.style.display = 'block';
+        money.setAttribute('obc-money', money.innerText);
+    }
+}
+
+function convertCurrencyByUserDefined(){
+    var curr = localStorage.getItem("obc-currency");
+    
+    if (curr != null) {
+        document.getElementById("obc-selected-curr").innerText = curr;
+        convertCurrency(curr);
+    }
+}
+
+function convertCurrency(currency){
+
+    localStorage.setItem('obcCurrencyCode', currency);
+    localStorage.setItem('obc-fast-currency-code', currency);
+    localStorage.setItem('obc-fast-setting-currency', settings.currency);
+
+    var moneySpan = document.getElementsByClassName('money');
+    for (money of moneySpan) {
+        var m = money.getAttribute('obc-money');
+
+        var thenum = m.replace( /^\D+/g, '');
+        
+        var isOnlyNum = /^[0-9, .]+$/.test(m);
+        
+        var newMoney = Currency.convert(parseFloat(thenum), settings.currency, currency);
+        
+        newMoney = newMoney.toFixed(2);
+        
+        if (isOnlyNum) {
+            var moneyCode = '';
+        } else {
+            var moneyCode = ' ' + currency;
+        }
+
+        money.innerText = newMoney + moneyCode;
+    }
+}
+
+
+function insertShopifyCurrencies(){
+    var script = document.createElement('script');
+    script.onload = function() {
+        shopifyCurrenciesLoaded = true;
+    };
+    script.src = "https://cdn.shopify.com/s/javascripts/currencies.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+}
+
+function loadSetting(){
+
+    var shopName = window.location.hostname;
+
+    fetch("https://mcc-octabyte.appspot.com/setting/read", { 
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          shop: shopName,
+        }), 
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+  
+          settings = result;
+          settingsLoaded = true;  
+        },
+        (error) => {
+          console.error(error);
+        }
+    );
+/* 
+    settings = {
+        shop: 'shop',
+        accessToken: 'accessToken',
+        currency: 'PKR',
+        money_format: 'Rs. ${amount} PKR',
+        configure: false,
+        plan: "free",
+        enable: true,
+        allCurrencies: true,
+        currencies: [
+            {
+                id:123,
+                value: 'PKR'
+            },
+            {
+                id:124,
+                value: 'EWE'
+            },
+            {
+                id:125,
+                value: 'QWS'
+            },
+        ],
+        geoLocation: false,
+        defaultCurrencyPicker: true,
+        pickerLocation: "tr",
+        pickerType: "float"
+    };
+
+    settingsLoaded = true; */
+    
+}
+
+function showCustomerExplaination(){
+    var obcCart = document.getElementById('octabyte-mcc-cart');
+    if (obcCart != null) {
+        obcCart.style.display = 'block';
+        document.getElementById('octabyte-selected-currency').innerText = localStorage.getItem('obcCurrencyCode');
+    }
+}
+
+function configureSetting(){
+
+    if (settings.defaultCurrencyPicker) {
+        addDropDown();
+    } else {
+        var config = addCustomDropDown();
+
+        if (!config) return;
+    }
+
+    if (settings.geoLocation) {
+        enableGeoLocation();
+    } else {
+        convertCurrencyByUserDefined();
+    }
+
+    if (settings.allCurrencies) {
+        generateCurrencyList(null);
+    } else {
+        generateCurrencyList(settings.currencies);
+    }
+    
+    //showCustomerExplaination();
+
+    selectCurrencyFromList();
+
+}
+
+function loadGeoPlugin(){
+    fetch("https://api.ipdata.co/?api-key=ef319447175d5d1c9b38677eaeea273575e9ec69d8500109ee5cb700", { 
+        headers: {
+          Accept: 'application/json',
+        },
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+            geoPluginCurrencyCode = result.currency.code;
+            configureSetting();
+        },
+        (error) => {
+          console.error(error);
+        }
+    );
+}
+
+function fastCurrencyConverter(){
+    var fastCurrCode = localStorage.getItem('obc-fast-currency-code');
+    var fastSettingCurr = localStorage.getItem('obc-fast-setting-currency');
+
+    if(fastCurrCode != null) {
+        settings = {
+            currency: fastSettingCurr
+        }
+        convertCurrency(fastCurrCode);
+    }
+}
+
+    saveOriginalValue();
+    fastCurrencyConverter();
+    
+    insertCSS();
+
+    showCustomerExplaination();
+
+    insertShopifyCurrencies();
+
+    loadSetting();
+
+    var settingTimer = setInterval(function(){
+        if (settingsLoaded && shopifyCurrenciesLoaded) {
+            
+            if (settings.geoLocation) {
+                loadGeoPlugin();
+                clearInterval(settingTimer);
+            } else {
+                configureSetting();
+                clearInterval(settingTimer);
+            }
+        }
+    }, 1000);
