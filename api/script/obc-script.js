@@ -97,7 +97,7 @@ function addCustomDropDown(){
     var icon = obcPlacholder.getAttribute('icon');
 
     if (icon == 'default') {
-        var iconURL = "curr-sign.svg";
+        var iconURL = "script/curr-sign.svg";
     } else {
         var iconURL = icon;
     }
