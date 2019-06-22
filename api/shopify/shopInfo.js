@@ -52,12 +52,12 @@ function shopInfo(shop, code, res, update, appconfig){
                   // SAVE: shop setting in database
                   db.update(shop, data1u, (err, savedData) => {
                       if(err){
-                          console.log('Error: while saving shop info in database');
+                          console.log('Error: while saving Money format info in database');
                           //res.json({ message: err });
                           return;
                       }
-
-                      res.redirect('https://' + shop + '/admin/apps/octabyte-currency-converter');
+                      console.log('redirecting to shop after saving money format');
+                      //res.redirect('https://' + shop + '/admin/apps/octabyte-currency-converter');
                       return;
                   });
 

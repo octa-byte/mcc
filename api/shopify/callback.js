@@ -54,11 +54,12 @@ router.get('/', (req, res, next) => {
           return;
         }
 
-        if(result.money_format.includes("money")){
+        if(data.money_format.includes("money")){
           shopInfo(shop, code, res, true, true);
           res.redirect('/panel?'+shop);
         }else{
           shopInfo(shop, code, res, true, false);
+          res.redirect('/panel?'+shop);
         }
 
         

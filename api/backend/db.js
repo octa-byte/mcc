@@ -120,7 +120,7 @@ function update(name, data, cb) {
     const newData = Object.assign(readData, data);
     const entity = {
       key: key,
-      data: toDatastore(newData, ['description']),
+      data: toDatastore(newData, ['accessToken','allCurrencies','configure','currencies','currency','defaultCurrencyPicker','enable','geoLocation','money_format','pickerLocation','pickerType','plan','shop']),
     };
   
     ds.save(entity, err => {
