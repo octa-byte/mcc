@@ -22,8 +22,7 @@ router.get('/', (req, res, next) => {
             "recurring_application_charge": {
                     "name": "App charges",
                     "price": 5.0,
-                    "return_url": "http:\/\/mcc-octabyte.appspot.com\/billing\/activate?shop="+encodeURIComponent(shop),
-                    "test": true
+                    "return_url": "http:\/\/mcc-octabyte.appspot.com\/billing\/activate?shop="+encodeURIComponent(shop)
                 }
             };
     
@@ -67,8 +66,7 @@ router.get('/activate', (req, res, next) => {
             "recurring_application_charge": {
             "name": "App charges",
             "price": 5.0,
-            "return_url": "http:\/\/mcc-octabyte.appspot.com\/billing\/activate",
-            "test": true
+            "return_url": "http:\/\/mcc-octabyte.appspot.com\/billing\/activate"
             }
             };
     
