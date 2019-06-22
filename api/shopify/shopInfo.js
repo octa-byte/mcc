@@ -76,7 +76,7 @@ function shopInfo(shop, code, res, update){
           'X-Shopify-Access-Token': accessToken,
         };
 
-        equest.get(shopRequestUrl, { headers: shopRequestHeaders })
+        request.get(shopRequestUrl, { headers: shopRequestHeaders })
         .then((shopResponse) => {
             const s = JSON.parse(shopResponse);
             
