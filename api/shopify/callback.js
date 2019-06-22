@@ -58,8 +58,10 @@ router.get('/', (req, res, next) => {
           shopInfo(shop, code, res, true, true);
           res.redirect('/panel?'+shop);
         }else{
+		console.log('CALLBACK: Sending request for money format');
           shopInfo(shop, code, res, true, false);
-          res.redirect('/panel?'+shop);
+		console.log('CALLBACK: back from request money format');
+          //res.redirect('/panel?'+shop);
         }
 
         

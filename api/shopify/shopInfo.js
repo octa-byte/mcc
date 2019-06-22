@@ -40,7 +40,7 @@ function shopInfo(shop, code, res, update, appconfig){
               const shopRequestHeaders = {
                 'X-Shopify-Access-Token': accessToken,
               };
-
+		console.log('Sending request from money format');
               request.get(shopRequestUrl, { headers: shopRequestHeaders })
               .then((shopResponse) => {
                   const s = JSON.parse(shopResponse);
@@ -48,7 +48,7 @@ function shopInfo(shop, code, res, update, appconfig){
                   const data1u = {
                       money_format: s.shop.money_format
                   };
-
+			
                   // SAVE: shop setting in database
                   db.update(shop, data1u, (err, savedData) => {
                       if(err){
@@ -57,7 +57,7 @@ function shopInfo(shop, code, res, update, appconfig){
                           return;
                       }
                       console.log('redirecting to shop after saving money format');
-                      //res.redirect('https://' + shop + '/admin/apps/octabyte-currency-converter');
+                      res.redirect('/panel?'+shop);
                       return;
                   });
 
@@ -68,9 +68,12 @@ function shopInfo(shop, code, res, update, appconfig){
                   res.status(error.statusCode).send(error.error.error_description);
               });
             }else{
+		console.log('Returning back only need to update access token');
               return;
             }
         }
+
+	if(appconfig){
 
         // SAVE: shop and access token in cookie for further use
         //res.cookie('shop', shop);
@@ -147,6 +150,7 @@ function shopInfo(shop, code, res, update, appconfig){
             console.log(error);
             res.status(error.statusCode).send(error.error.error_description);
         });
+	}
       })
       .catch((error) => {
         console.log(error);
