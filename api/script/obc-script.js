@@ -201,7 +201,7 @@ function convertCurrency(currency){
     localStorage.setItem('obc-fast-currency-code', currency);
     localStorage.setItem('obc-fast-setting-currency', obcSettings.currency);
 
-    if( Currency != null || Currency != undefined ) {
+    if( typeof Currency != "undefined" ) {
         localStorage.setItem('obc-fast-currency-rates-from', Currency.rates[obcSettings.currency]);
         localStorage.setItem('obc-fast-currency-rates-to', Currency.rates[currency]);
     }
@@ -216,7 +216,7 @@ function convertCurrency(currency){
         
         var newMoney = 0;
 
-        if( Currency != null || Currency != undefined ) {
+        if( typeof Currency != "undefined" ) {
             newMoney = Currency.convert(parseFloat(thenum), obcSettings.currency, currency);
         } else {
             newMoney = (parseFloat(thenum) * obcFastCurrencyRatesFrom) / obcFastCurrencyRatesTo;
