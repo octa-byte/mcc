@@ -357,7 +357,7 @@ function fastCurrencyConverter(){
 }
 
     saveOriginalValue();
-    fastCurrencyConverter();
+    //fastCurrencyConverter();
     
     insertCSS();
 
