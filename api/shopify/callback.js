@@ -50,12 +50,18 @@ router.get('/', (req, res, next) => {
   
       db.read(shop, (err, data) => {
         if(err){
-          shopInfo(shop, code, res, false);
+          shopInfo(shop, code, res, false, true);
           return;
         }
-        shopInfo(shop, code, res, true);
+
+        if(result.money_format.includes("money")){
+          shopInfo(shop, code, res, true, true);
+          res.redirect('/panel?'+shop);
+        }else{
+          shopInfo(shop, code, res, true, false);
+        }
+
         
-        res.redirect('/panel?'+shop);
       });
   
     } else {

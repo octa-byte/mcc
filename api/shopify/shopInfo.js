@@ -7,7 +7,7 @@ const db = require('../backend/db');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 
-function shopInfo(shop, code, res, update){
+function shopInfo(shop, code, res, update, appconfig){
 
       // DONE: Exchange temporary code for a permanent access token
       const accessTokenRequestUrl = 'https://' + shop + '/admin/oauth/access_token';
@@ -35,7 +35,41 @@ function shopInfo(shop, code, res, update){
             //res.redirect('http://' + shop + '/admin/apps/multi-currency-1');
           });
 
-          return;
+          if(!appconfig){
+                const shopRequestUrl = 'https://' + shop + '/admin/api/2019-04/shop.json';
+              const shopRequestHeaders = {
+                'X-Shopify-Access-Token': accessToken,
+              };
+
+              request.get(shopRequestUrl, { headers: shopRequestHeaders })
+              .then((shopResponse) => {
+                  const s = JSON.parse(shopResponse);
+                  
+                  const data1u = {
+                      money_format: s.shop.money_format
+                  };
+
+                  // SAVE: shop setting in database
+                  db.update(shop, data1u, (err, savedData) => {
+                      if(err){
+                          console.log('Error: while saving shop info in database');
+                          //res.json({ message: err });
+                          return;
+                      }
+
+                      res.redirect('https://' + shop + '/admin/apps/octabyte-currency-converter');
+                      return;
+                  });
+
+                //res.status(200).end(shopResponse);
+              })
+              .catch((error) => {
+                  console.log(error);
+                  res.status(error.statusCode).send(error.error.error_description);
+              });
+            }else{
+              return;
+            }
         }
 
         // SAVE: shop and access token in cookie for further use

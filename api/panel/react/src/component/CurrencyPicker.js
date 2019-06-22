@@ -23,7 +23,9 @@ class CurrencyPicker extends Component {
             pickerLocation: this.state.pickerLocation
         };        
 
-        let shopName = window.location.hostname;
+        let shopName = window.location.search;
+        shopName = shopName.replace('?','');
+        
         fetch(APP_URL + "/update", { 
           method: 'POST',
           headers: {
@@ -38,7 +40,6 @@ class CurrencyPicker extends Component {
         .then(res => res.json())
         .then(
           (result) => {
-            console.log(result);
             this.setState({ buttonState: 'outline' });
           },
           (error) => {
