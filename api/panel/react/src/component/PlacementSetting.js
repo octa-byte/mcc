@@ -82,7 +82,7 @@ class PlacementSetting extends Component {
                         </List.Item>
                         <List.Item>Go to <b>Themes</b> inside <b>Online store</b></List.Item>
                         <List.Item>Click on <b>Actions -> Edit Code</b> </List.Item>
-                        <List.Item>Open <b>theme.liquid</b> from <b>Layout</b> folder</List.Item>
+                        <List.Item>Open <b>header.liquid</b> from <b>Sections</b> folder</List.Item>
                         <List.Item>
                             Place the code where you want to show <b>currency picker</b>
                         </List.Item>
@@ -92,7 +92,7 @@ class PlacementSetting extends Component {
                     <Banner status="info" onDismiss={() => {}}>
                         <p>
                             You can also customize currency picker <b>icon</b>{' '}
-                            <Link url="">For detailed information check it.</Link>
+                            Replace <b>default</b> with your image <b>URL</b>
                         </p>
                     </Banner>
                 </div>
@@ -100,7 +100,7 @@ class PlacementSetting extends Component {
             {
                 this.props.defaultCurrencyPicker ?
                 <Popup 
-                title="Reach more shoppers with Instagram product tags" 
+                title="How to setup custom currency picker" 
                 video="ta_tTZrarE0" />
                 : ''
             } 

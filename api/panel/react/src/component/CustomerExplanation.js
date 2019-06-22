@@ -64,7 +64,7 @@ class CustomerExplanation extends Component {
                 openVideoTutorial ? 
                 <Popup 
                     key={Math.random()}
-                    title="Reach more shoppers with Instagram product tags" 
+                    title="How to setup customer explanation" 
                     video="ta_tTZrarE0" />
                 : ''    
             }

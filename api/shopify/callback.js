@@ -48,19 +48,13 @@ router.get('/', (req, res, next) => {
         return res.status(200).send('HMAC validation failed');
       }
   
-      // TODO: get shop info if this is first time
-      console.log("============ Getting shop info ===============");
       db.read(shop, (err, data) => {
         if(err){
-          console.log('Shop info not found');
           shopInfo(shop, code, res, false);
-          console.log('Redirecting to MCC panel...');
           return;
         }
-        console.log('Shop info already there');
-        console.log('Redirecting to MCC panel...');
-        //TODO: Redirect this to MCC panel
         shopInfo(shop, code, res, true);
+        
         res.redirect('/panel?'+shop);
       });
   
