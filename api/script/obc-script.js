@@ -4,6 +4,8 @@ var settingsLoaded = false;
 var shopifyCurrenciesLoaded = false;
 var geoPluginLoaded = false;
 var geoPluginCurrencyCode = '';
+var obcFastCurrencyRatesFrom = 0;
+var obcFastCurrencyRatesTo = 1;
 
 function obc_dropdown_toggle() {
     document.getElementById("obc-drop-down").classList.toggle("obc-show");
@@ -199,6 +201,11 @@ function convertCurrency(currency){
     localStorage.setItem('obc-fast-currency-code', currency);
     localStorage.setItem('obc-fast-setting-currency', obcSettings.currency);
 
+    if( Currency != null || Currency != undefined ) {
+        localStorage.setItem('obc-fast-currency-rates-from', Currency.rates[obcSettings.currency]);
+        localStorage.setItem('obc-fast-currency-rates-to', Currency.rates[currency]);
+    }
+
     var moneySpan = document.getElementsByClassName('money');
     for (money of moneySpan) {
         var m = money.getAttribute('obc-money');
@@ -207,7 +214,15 @@ function convertCurrency(currency){
         
         var isOnlyNum = /^[0-9, .]+$/.test(m);
         
-        var newMoney = Currency.convert(parseFloat(thenum), obcSettings.currency, currency);
+        var newMoney = 0;
+
+        if( Currency != null || Currency != undefined ) {
+            newMoney = Currency.convert(parseFloat(thenum), obcSettings.currency, currency);
+        } else {
+            newMoney = (parseFloat(thenum) * obcFastCurrencyRatesFrom) / obcFastCurrencyRatesTo;
+        }
+
+        
         
         newMoney = newMoney.toFixed(2);
         
@@ -347,6 +362,8 @@ function loadGeoPlugin(){
 function fastCurrencyConverter(){
     var fastCurrCode = localStorage.getItem('obc-fast-currency-code');
     var fastSettingCurr = localStorage.getItem('obc-fast-setting-currency');
+    obcFastCurrencyRatesFrom = localStorage.getItem('obc-fast-currency-rates-from');
+    obcFastCurrencyRatesTo = localStorage.getItem('obc-fast-currency-rates-to');
 
     if(fastCurrCode != null) {
         obcSettings = {
@@ -357,7 +374,7 @@ function fastCurrencyConverter(){
 }
 
     saveOriginalValue();
-    //fastCurrencyConverter();
+    fastCurrencyConverter();
     
     insertCSS();
 
