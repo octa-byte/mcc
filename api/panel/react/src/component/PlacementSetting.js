@@ -101,7 +101,7 @@ class PlacementSetting extends Component {
                 this.props.defaultCurrencyPicker ?
                 <Popup 
                 title="How to setup custom currency picker" 
-                video="ta_tTZrarE0" />
+                video="twBdh6aICg4" />
                 : ''
             } 
             

@@ -65,7 +65,7 @@ class CustomerExplanation extends Component {
                 <Popup 
                     key={Math.random()}
                     title="How to setup customer explanation" 
-                    video="ta_tTZrarE0" />
+                    video="OjvDVUYDSb4" />
                 : ''    
             }
             </CalloutCard>

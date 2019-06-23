@@ -55,7 +55,7 @@ class App extends Component {
         }
         {
           !extConfig ?
-            <Popup title="Configure your application" video="ta_tTZrarE0" >
+            <Popup title="Configure your application" video="QQ0b9arP7kU" >
                 <Banner status="info" onDismiss={() => { }}>
                   <p>
                     You need to configure your store to function it properly{' '}
