@@ -20,7 +20,7 @@ class Popup extends Component {
             secondaryActions={[
               {
                 content: 'Contact us',
-                onAction: this.handleChange,
+                onAction: this.openContactForm,
               },
             ]}
           >
@@ -45,6 +45,11 @@ class Popup extends Component {
           </Modal>
       );
     }
+
+    openContactForm = () => {
+      window.open('https://forms.gle/TsgYH5FMYLqEFbti9');
+    }
+
     handleChange = () => {
       this.setState(({active}) => ({active: !active}));
     };
