@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@google-cloud/datastore": "^3.1.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "nconf": "^0.10.0",
     "prompt": "^1.0.0",
     "pug": "^2.0.3",
